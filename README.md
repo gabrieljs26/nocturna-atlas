@@ -8,6 +8,12 @@ La lista se guarda en Supabase y se recupera al volver con el mismo navegador. P
 
 Activa **Luz roja** en la cabecera para consultar el atlas con una paleta tenue durante la observación. Tu navegador recuerda la preferencia.
 
+## Ruta de observación
+
+En el [planificador](https://nocturna-atlas.vercel.app/planificador) puedes seleccionar una ciudad, una noche y varios objetos. Nocturna calcula sus posiciones a lo largo de la noche y ordena las paradas para incluir el mayor número posible. Cada parada indica a qué hora empezar y en qué dirección apuntar. La ruta se puede descargar como archivo `.ics` para importarla en un calendario.
+
+El cálculo cubre de 18:00 a 06:00 en la zona horaria de la ciudad. Reserva 20 minutos por objeto y deja al menos 10 minutos entre paradas. Solo propone tramos con el objetivo a 25° o más de altura y el Sol a 18° o más bajo el horizonte. Entre rutas con el mismo número de objetos, prioriza las observaciones a mayor altura. Las condiciones reales también dependen de la nubosidad, la luz lunar y los obstáculos locales. [Astronomy Engine](https://github.com/cosinekitty/astronomy) · [Definición de crepúsculo astronómico](https://aa.usno.navy.mil/faq/RST_defs).
+
 ## Desarrollo local
 
 1. Usa Node.js 24 y ejecuta `npm ci`.

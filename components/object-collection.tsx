@@ -9,6 +9,7 @@ import {
   Compass,
   Crosshair,
   Eye,
+  Route,
   Search,
   SlidersHorizontal,
   Telescope,
@@ -140,6 +141,9 @@ function ObjectDetail({ selection }: { selection: ObjectSelection }) {
           </div>
           <div className="dialog-actions">
             <SaveButton object={object} full />
+            <Link className="details-button" href={"/planificador?objeto=" + encodeURIComponent(object.id)}>
+              <Route size={16} aria-hidden="true" /> Planificar observación
+            </Link>
             <a className="details-button" href={sourceLink} target="_blank" rel="noreferrer">
               Ficha en NASA <ArrowUpRight size={16} aria-hidden="true" />
             </a>

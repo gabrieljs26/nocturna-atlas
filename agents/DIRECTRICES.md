@@ -6,6 +6,7 @@ Develop debe cumplir estas directrices en cada cambio. Testing las utiliza como 
 
 - **Calidad.** Pasan lint, TypeScript estricto, pruebas automatizadas y compilación de producción.
 - **Catálogo.** La portada carga datos de Supabase. Los filtros, la búsqueda con y sin tildes, el estado sin resultados y las fichas muestran resultados coherentes. Distingue el contenido editorial de cualquier cálculo de visibilidad.
+- **Ruta de observación.** Comprueba cambios de ciudad y noche, selección desde una ficha y uso de objetos guardados. La ruta muestra la hora local, respeta los intervalos entre paradas y admite noches sin objetivos. El archivo de calendario contiene las mismas paradas y las horas correctas al cruzar la medianoche.
 - **Lista de observación.** Guardar y eliminar funcionan y el cambio se conserva al recargar. Dos navegadores sin cookies compartidas mantienen listas independientes. Las repeticiones de una misma mutación conservan el resultado esperado.
 - **Errores y datos.** Una solicitud inválida se rechaza con un estado HTTP apropiado. La interfaz explica un fallo de red y permite reintentar. La base de datos tiene restricciones y RLS. Las claves de API quedan fuera del repositorio.
 - **Interfaz.** Comprueba los flujos con teclado y en escritorio y móvil. Los controles tienen nombres accesibles, foco visible y estados identificables. La página no desborda horizontalmente.

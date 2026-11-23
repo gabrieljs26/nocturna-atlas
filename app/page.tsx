@@ -1,5 +1,6 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { connection } from "next/server";
 import { CatalogUnavailable, ObjectCollection } from "@/components/object-collection";
 import { getCatalog } from "@/lib/db";
@@ -20,10 +21,15 @@ export default async function AtlasPage() {
         <div className="hero-content">
           <p className="eyebrow hero-eyebrow">Atlas de observación astronómica</p>
           <h1 id="hero-title">El cielo,<br /><span>más cerca.</span></h1>
-          <p className="hero-summary">Encuentra galaxias, nebulosas y cúmulos para tu próxima noche bajo las estrellas.</p>
-          <a href="#catalogo" className="action-button hero-cta">
-            Explorar catálogo <ArrowDown size={16} aria-hidden="true" />
-          </a>
+          <p className="hero-summary">Encuentra las mejores horas para observar tus objetos favoritos y lleva la ruta a tu calendario.</p>
+          <div className="hero-actions">
+            <Link href="/planificador" className="action-button hero-plan">
+              Planificar mi noche <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
+            <a href="#catalogo" className="hero-catalog-link">
+              Explorar catálogo <ArrowDown size={15} aria-hidden="true" />
+            </a>
+          </div>
         </div>
         <div className="hero-caption">
           <span>Observatorio Paranal, Chile</span>

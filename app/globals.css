@@ -284,8 +284,33 @@ h1, h2, h3, p { margin: 0; }
 }
 
 .action-secondary:hover { background: var(--elevated); }
-.hero-cta svg { transition: transform .18s ease; }
-.hero-cta:hover svg { transform: translateY(3px); }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 18px;
+}
+
+.hero-catalog-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  color: var(--body);
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.hero-catalog-link:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.hero-actions svg { transition: transform .18s ease; }
+.hero-plan:hover svg { transform: translate(2px, -2px); }
+.hero-catalog-link:hover svg { transform: translateY(3px); }
 
 .catalog-section {
   margin: 44px 0 78px;
@@ -786,6 +811,9 @@ body:has(.object-dialog[open]) { overflow: hidden; }
   .hero-content { padding: 40px 0 68px; }
   .hero h1 { font-size: clamp(53px, 13.4vw, 74px); }
   .hero-summary { font-size: 13px; max-width: 292px; margin-bottom: 18px; }
+  .hero-actions { gap: 4px 12px; }
+  .hero-actions .action-button { min-height: 44px; padding-inline: 12px; gap: 6px; font-size: 12px; }
+  .hero-catalog-link { font-size: 12px; }
   .hero-caption { right: 0; bottom: 11px; font-size: 10px; }
   .catalog-section { margin: 32px 0 53px; scroll-margin-top: 76px; }
   .section-heading { margin-bottom: 19px; }
