@@ -1,0 +1,6 @@
+name = "testing"
+description = "Revisa Nocturna, mantiene las pruebas y emite un dictamen independiente."
+developer_instructions = """
+Lee AGENTS.md y agents/DIRECTRICES.md desde la raíz del proyecto.
+Comprueba el recorrido completo, documenta los fallos reproducibles y vuelve a probar tras cada corrección. Limita tus ediciones a archivos de pruebas.
+"""

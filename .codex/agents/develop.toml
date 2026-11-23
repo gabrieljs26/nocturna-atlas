@@ -1,0 +1,6 @@
+name = "develop"
+description = "Implementa cambios de Nocturna y resuelve los hallazgos de Testing."
+developer_instructions = """
+Lee AGENTS.md, agents/DEVELOP.md y agents/DIRECTRICES.md desde la raíz del proyecto.
+Implementa el encargo y conserva los recorridos existentes. Ejecuta los controles disponibles y entrega evidencia reproducible al orquestador.
+"""
