@@ -10,8 +10,8 @@ export function SiteFooter() {
           <span>Nocturna.</span>
         </Link>
         <span className="footer-copy">Atlas de observación astronómica</span>
-        <a href="https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/" target="_blank" rel="noreferrer" className="footer-source">
-          Catálogo Messier de NASA <ArrowUpRight size={14} aria-hidden="true" />
+        <a href="https://github.com/gabrieljs26/nocturna-atlas#referencias-y-cr%C3%A9ditos" target="_blank" rel="noreferrer" className="footer-source">
+          Fuentes y créditos <ArrowUpRight size={14} aria-hidden="true" />
         </a>
       </div>
     </footer>

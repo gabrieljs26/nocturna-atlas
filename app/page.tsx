@@ -1,4 +1,4 @@
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 import { connection } from "next/server";
 import { CatalogUnavailable, ObjectCollection } from "@/components/object-collection";
@@ -14,22 +14,26 @@ export default async function AtlasPage() {
   return (
     <div className="shell atlas-page">
       <section className="hero" aria-labelledby="hero-title">
-        <Image className="hero-image" src="/images/nocturna-hero.webp" alt="" fill sizes="(min-width: 1340px) 1260px, 96vw" preload />
+        <div className="hero-photograph">
+          <Image className="hero-image" src="/images/paranal.webp" alt="" fill sizes="(min-width: 1340px) 1000px, (min-width: 620px) 76vw, 100vw" preload />
+        </div>
         <div className="hero-content">
-          <p className="eyebrow hero-eyebrow"><Sparkles size={15} aria-hidden="true" /> Atlas de observación astronómica</p>
+          <p className="eyebrow hero-eyebrow">Atlas de observación astronómica</p>
           <h1 id="hero-title">El cielo,<br /><span>más cerca.</span></h1>
-          <p className="hero-summary">Encuentra galaxias, nebulosas y cúmulos estelares. Guarda los que quieras observar en tu próxima noche bajo las estrellas.</p>
-          <a href="#catalogo" className="action-button">
-            Explorar catálogo <ArrowDown size={17} aria-hidden="true" />
+          <p className="hero-summary">Encuentra galaxias, nebulosas y cúmulos para tu próxima noche bajo las estrellas.</p>
+          <a href="#catalogo" className="action-button hero-cta">
+            Explorar catálogo <ArrowDown size={16} aria-hidden="true" />
           </a>
         </div>
-        <span className="hero-caption">Vía Láctea · Ilustración</span>
+        <div className="hero-caption">
+          <span>Observatorio Paranal, Chile</span>
+          <a href="https://www.eso.org/public/images/potw1517a/" target="_blank" rel="noreferrer">ESO/J. Colosimo</a>
+        </div>
       </section>
-      <section className="catalog-section" id="catalogo" aria-labelledby="catalog-title">
+      <section className="catalog-section" id="catalogo" tabIndex={-1} aria-labelledby="catalog-title">
         <div className="section-heading">
           <p className="eyebrow catalog-eyebrow">Catálogo Messier</p>
           <h2 id="catalog-title">Objetos de cielo profundo</h2>
-          <p>Elige qué observar y consulta dónde encontrarlo y qué equipo usar.</p>
         </div>
         {objects ? <ObjectCollection objects={objects} /> : <CatalogUnavailable href="/" />}
       </section>

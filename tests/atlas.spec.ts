@@ -41,9 +41,21 @@ test("una sesión limpia puede abrir y filtrar el catálogo público", async ({ 
   await expect(page.getByRole("heading", { level: 1, name: /El cielo, más cerca/i })).toBeVisible();
   await expect(title(page, andromeda)).toBeVisible();
   await expect(title(page, orion)).toBeVisible();
+  const heroImage = page.getByRole("region", { name: /El cielo, más cerca/i }).locator("img");
+  await heroImage.evaluate((image) => (image as HTMLImageElement).decode());
 
   await page.getByRole("link", { name: "Explorar catálogo", exact: true }).click();
   await expect(page).toHaveURL(/#catalogo$/);
+  const catalogImage = page.getByRole("img", { name: "Disco inclinado y brillante de la galaxia de Andrómeda" });
+  await catalogImage.scrollIntoViewIfNeeded();
+  await catalogImage.evaluate((image) => (image as HTMLImageElement).decode());
+  const imageBounds = await catalogImage.boundingBox();
+  if (!imageBounds) throw new Error("La imagen del objeto debe tener un área visible.");
+  await page.mouse.click(imageBounds.x + imageBounds.width / 2, imageBounds.y + imageBounds.height / 2);
+  const cardDialog = page.getByRole("dialog", { name: andromeda });
+  await expect(cardDialog).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(cardDialog).toHaveCount(0);
 
   const galaxies = page.getByRole("button", { name: "Galaxias", exact: true });
   await galaxies.click();
@@ -71,7 +83,13 @@ test("una sesión limpia puede abrir y filtrar el catálogo público", async ({ 
   await expect(
     page.getByText(/(?:sin resultados|no (?:hemos )?encontrado|no encontramos|no hay (?:ningún )?objeto)/i).first(),
   ).toBeVisible();
-  await search.clear();
+  await page.getByRole("button", { name: "Restablecer filtros" }).click();
+  await expect(page.getByRole("button", { name: "Todos", exact: true })).toBeFocused();
+  await expect(title(page, andromeda)).toBeVisible();
+  await search.fill("Orión");
+  await page.getByRole("button", { name: "Borrar búsqueda" }).click();
+  await expect(search).toBeFocused();
+  await expect(search).toHaveValue("");
   await expect(title(page, andromeda)).toBeVisible();
   expect(errors).toEqual([]);
 });
@@ -228,9 +246,14 @@ test("la luz roja se conserva al recargar y se puede desactivar", async ({ page 
 });
 
 test.describe("pantalla estrecha", () => {
-  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  test.use({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    reducedMotion: "reduce",
+  });
 
-  test("la ficha se abre con teclado, restaura el foco y cabe en el viewport", async ({ page }) => {
+  test("la ficha conserva teclado, foco y anchura con movimiento reducido", async ({ page }) => {
     await page.goto("/");
     await expect(title(page, orion)).toBeVisible();
     const search = page.getByRole("searchbox", { name: "Buscar objetos" });
@@ -246,12 +269,29 @@ test.describe("pantalla estrecha", () => {
     await expect(dialog).toBeVisible();
     await expect(dialog.getByRole("button", { name: "Cerrar ficha" })).toBeVisible();
     await expect(dialog.getByText(/(?:ascensión recta|declinación)/i).first()).toBeVisible();
+    const motionDurations = await dialog.evaluate((element) => {
+      const frame = element.firstElementChild;
+      return [element, frame].flatMap((node) => {
+        if (!node) return [];
+        const style = getComputedStyle(node);
+        return [style.transitionDuration, style.animationDuration].flatMap((value) =>
+          value.split(",").map((duration) => Number.parseFloat(duration)),
+        );
+      });
+    });
+    expect(Math.max(...motionDurations)).toBeLessThanOrEqual(0.002);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(1);
 
     await page.keyboard.press("Escape");
     await expect(dialog).toHaveCount(0);
     await expect(details).toBeFocused();
     expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(1);
+
+    await page.keyboard.press("Enter");
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole("button", { name: "Cerrar ficha" }).click();
+    await expect(dialog).toHaveCount(0);
+    await expect(details).toBeFocused();
 
     await page.setViewportSize({ width: 320, height: 720 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(321);

@@ -80,17 +80,21 @@ function ObjectCard({ object, open }: { object: CatalogObject; open: () => void 
   );
 }
 
-function ObjectDetail({ object, onClose }: { object: CatalogObject; onClose: () => void }) {
+type ObjectSelection = { object: CatalogObject };
+
+function ObjectDetail({ selection }: { selection: ObjectSelection }) {
+  const { object } = selection;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog && !dialog.open) {
+      dialog.inert = false;
       dialog.showModal();
       closeRef.current?.focus();
     }
-  }, []);
+  }, [selection]);
 
   const sourceLink = "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-" + object.id.slice(1) + "/";
 
@@ -99,7 +103,9 @@ function ObjectDetail({ object, onClose }: { object: CatalogObject; onClose: () 
       ref={dialogRef}
       className="object-dialog"
       aria-labelledby="object-title"
-      onClose={onClose}
+      onClose={(event) => {
+        if (!event.currentTarget.open) event.currentTarget.inert = true;
+      }}
       onClick={(event) => {
         if (event.target === event.currentTarget) dialogRef.current?.close();
       }}
@@ -148,7 +154,10 @@ function ObjectDetail({ object, onClose }: { object: CatalogObject; onClose: () 
 export function ObjectCollection({ objects, savedOnly = false }: { objects: CatalogObject[]; savedOnly?: boolean }) {
   const [category, setCategory] = useState<CategoryFilter>("todos");
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<CatalogObject | null>(null);
+  // Keep the last selection mounted so the native dialog can transition out.
+  const [selected, setSelected] = useState<ObjectSelection | null>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const allFilterRef = useRef<HTMLButtonElement>(null);
   const list = useObservations();
   const filtered = savedOnly
     ? list.objectIds.flatMap((id) => objects.filter((object) => object.id === id))
@@ -157,6 +166,12 @@ export function ObjectCollection({ objects, savedOnly = false }: { objects: Cata
   function reset() {
     setCategory("todos");
     setQuery("");
+    allFilterRef.current?.focus();
+  }
+
+  function clearSearch() {
+    setQuery("");
+    searchRef.current?.focus();
   }
 
   return (
@@ -165,16 +180,16 @@ export function ObjectCollection({ objects, savedOnly = false }: { objects: Cata
         <div className="catalog-controls">
           <div className="category-filters" role="group" aria-label="Categorías de objetos">
             {categoryFilters.map(({ value, label }) => (
-              <button key={value} type="button" className="filter-button" aria-pressed={category === value} onClick={() => setCategory(value)}>
+              <button key={value} ref={value === "todos" ? allFilterRef : undefined} type="button" className="filter-button" aria-pressed={category === value} onClick={() => setCategory(value)}>
                 {label}
               </button>
             ))}
           </div>
           <div className="catalog-search">
             <Search size={19} aria-hidden="true" />
-            <input aria-label="Buscar objetos" type="search" value={query} maxLength={100} placeholder="Buscar por nombre o número…" onChange={(event) => setQuery(event.target.value)} />
+            <input ref={searchRef} aria-label="Buscar objetos" type="search" value={query} maxLength={100} placeholder="Buscar por nombre o número…" onChange={(event) => setQuery(event.target.value)} />
             {query && (
-              <button className="icon-button search-clear" type="button" aria-label="Borrar búsqueda" onClick={() => setQuery("")}>
+              <button className="icon-button search-clear" type="button" aria-label="Borrar búsqueda" onClick={clearSearch}>
                 <X size={16} aria-hidden="true" />
               </button>
             )}
@@ -186,11 +201,13 @@ export function ObjectCollection({ objects, savedOnly = false }: { objects: Cata
       {(!savedOnly || list.phase === "ready") && (
         <>
           <p className="result-count" role="status">
-            {filtered.length + (filtered.length === 1 ? " objeto" : " objetos") + (savedOnly ? (filtered.length === 1 ? " guardado" : " guardados") : "")}
+            <span className="result-count-value" key={filtered.map(({ id }) => id).join(",")}>
+              {filtered.length + (filtered.length === 1 ? " objeto" : " objetos") + (savedOnly ? (filtered.length === 1 ? " guardado" : " guardados") : "")}
+            </span>
           </p>
           {filtered.length > 0 ? (
             <div className="object-grid">
-              {filtered.map((object) => <ObjectCard key={object.id} object={object} open={() => setSelected(object)} />)}
+              {filtered.map((object) => <ObjectCard key={object.id} object={object} open={() => setSelected({ object })} />)}
             </div>
           ) : (
             <div className="empty-state">
@@ -210,7 +227,7 @@ export function ObjectCollection({ objects, savedOnly = false }: { objects: Cata
           )}
         </>
       )}
-      {selected && <ObjectDetail object={selected} onClose={() => setSelected(null)} />}
+      {selected && <ObjectDetail selection={selected} />}
     </>
   );
 }

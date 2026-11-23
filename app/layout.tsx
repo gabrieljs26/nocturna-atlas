@@ -4,6 +4,7 @@ import { ObservationProvider } from "@/components/observations";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
+import "@/components/catalog-motion.css";
 
 export const metadata: Metadata = {
   title: {
@@ -21,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a className="skip-link" href="#contenido">Saltar al contenido</a>
         <ObservationProvider>
           <SiteHeader />
-          <main id="contenido">{children}</main>
+          <main id="contenido" tabIndex={-1}>{children}</main>
           <SiteFooter />
         </ObservationProvider>
       </body>

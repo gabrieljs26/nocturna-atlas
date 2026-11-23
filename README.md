@@ -43,12 +43,11 @@ Los perfiles de Codex están en [`.codex/agents`](.codex/agents). Para un cambio
 
 ## Referencias y créditos
 
-- [Sky Patch](https://github.com/claudeschneider/skypatch), referencia de producto para la exploración de objetivos astronómicos.
-- [Next.js with Supabase](https://github.com/vercel/next.js/tree/canary/examples/with-supabase), referencia de integración para App Router y Supabase.
 - [Hubble’s Messier Catalog](https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/), referencia para el catálogo.
 
 | Imagen | Crédito y ficha original |
 | --- | --- |
+| Portada · Observatorio Paranal | ESO/J. Colosimo, [ESO potw1517a](https://www.eso.org/public/images/potw1517a/) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 | M31 · Andrómeda | NASA/JPL-Caltech, [GALEX PIA15416](https://science.nasa.gov/photojournal/andromeda/) |
 | M42 · Orión | NASA, ESA, M. Robberto (STScI/ESA) y Hubble Space Telescope Orion Treasury Project Team, [ESA/Hubble heic0601a](https://esahubble.org/images/heic0601a/) |
 | M45 · Pléyades | NASA/JPL-Caltech/UCLA, [WISE PIA13121](https://science.nasa.gov/photojournal/seven-sisters-get-wise/) |
@@ -56,11 +55,4 @@ Los perfiles de Codex están en [`.codex/agents`](.codex/agents). Para un cambio
 | M51 · Remolino | NASA, ESA, S. Beckwith (STScI) y Hubble Heritage Team (STScI/AURA), [ESA/Hubble heic0506a](https://esahubble.org/images/heic0506a/) |
 | M57 · Anillo | NASA, ESA y C. Robert O’Dell (Vanderbilt University), [ESA/Hubble heic1310a](https://esahubble.org/images/heic1310a/) |
 
-Las imágenes del catálogo se sirven como WebP. [La portada](public/images/nocturna-hero.webp) es una ilustración generada con ImageGen. [Space Grotesk](public/fonts/OFL-space-grotesk.txt) e [Inter](public/fonts/OFL-inter.txt) se distribuyen bajo SIL Open Font License.
-
-<details>
-<summary>Instrucciones para la ilustración de portada</summary>
-
-> Create one photoreal cinematic widescreen website hero background for an original Spanish astronomy field guide, NO text, no graphic marks, no UI, no watermark. Very wide 2.7:1 composition if possible. A breath-taking true-feeling nightscape above the high rocky Canary Islands: horizon and volcanic ridge in the bottom 18%, small silhouetted astronomical observatory dome with a very faint amber slit at the far right hill. Brilliant violet and magenta galactic core arcs diagonally up across the RIGHT half of the scene, rich glowing purple nebular dust and small stars, lighter lavender filaments, realistic long-exposure photography, rich ink-black and deep navy. LEFT 45 percent stays substantially darker and sparse with clean negative space for off-image white type. Foggy layers of ridges only at the very bottom. No giant planet, no humans, no buildings on the left. A restrained, world-class high-end photographic annual, striking contrast, rich blacks and deliberately integrated left fade.
-
-</details>
+Las imágenes se sirven como WebP y su encuadre se adapta a la pantalla. [Space Grotesk](public/fonts/OFL-space-grotesk.txt), [Instrument Serif](public/fonts/OFL-instrument-serif.txt) e [Inter](public/fonts/OFL-inter.txt) se distribuyen bajo SIL Open Font License.
